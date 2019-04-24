@@ -21,10 +21,6 @@ export class SuperheroesService {
     });
   }
 
-  public bootstrap(ABI: any) {
-    this.ABI = ABI;
-  }
-
   public addHero({name, avatar, category, description}): Promise<any> {
     return this.ABI.addSuperhero(name, avatar, category, description, {from: this.accounts[0]});
   }
