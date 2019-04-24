@@ -9,15 +9,15 @@ import {
   MatInputModule,
   MatSelectModule, MatSnackBarModule
 } from '@angular/material';
-import { SuperheroComponent } from './components/superhero/superhero.component';
 import { AddSuperheroComponent } from './components/add-superhero/add-superhero.component';
 import {FormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import { SuperheroDetailsComponent } from './components/superhero-details/superhero-details.component';
 import { HeroReviewFormComponent } from './components/hero-review-form/hero-review-form.component';
+import { ReviewsComponent } from './components/reviews/reviews.component';
 
 @NgModule({
-  declarations: [SuperheroesListComponent, SuperheroComponent, AddSuperheroComponent, SuperheroDetailsComponent, HeroReviewFormComponent],
+  declarations: [SuperheroesListComponent,  AddSuperheroComponent, SuperheroDetailsComponent, HeroReviewFormComponent, ReviewsComponent],
   imports: [
     CommonModule,
     FormsModule,

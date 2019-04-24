@@ -46,9 +46,7 @@ export class Web3Service {
 
     const contractAbstraction = contract(artifacts);
     contractAbstraction.setProvider(this.web3.currentProvider);
-    const contractInstance = await contractAbstraction.deployed();
-
-    return contractInstance;
+    return contractAbstraction.deployed();
   }
 
   public getProvider() {

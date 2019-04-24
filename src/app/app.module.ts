@@ -13,7 +13,8 @@ const appRoutes: Routes = [
     path: 'superheroes/:id',
     component: SuperheroDetailsComponent,
     resolve: {
-      hero: HeroDetailResolverService
+      hero: HeroDetailResolverService,
+      reviews: ReviewsResolverService
     }
   },
   {
@@ -24,13 +25,16 @@ const appRoutes: Routes = [
   ,
   {
     path: '',
+    redirectTo: 'superheroes',
+    pathMatch: 'full'
+  },
+  {
+    path: 'superheroes',
     resolve: {
       web3: Web3ResolverService,
-      contractABI: ContractAbiResolverService,
       superheroes: SuperheroesResolverService
     },
-    component: SuperheroesListComponent,
-    data: { title: 'Heroes List' }
+    component: SuperheroesListComponent
   }
 ];
 
@@ -50,8 +54,8 @@ import { LayoutModule } from '@angular/cdk/layout';
 import {UtilModule} from './common/services/util.module';
 import {HeroDetailResolverService} from './superheroes/services/hero-detail-resolver.service';
 import {Web3ResolverService} from './common/services/web3-resolver.service';
-import {ContractAbiResolverService} from './common/services/contract-abi-resolver.service';
 import {SuperheroesResolverService} from './superheroes/services/superheroes-resolver.service';
+import {ReviewsResolverService} from './superheroes/services/reviews-resolver.service';
 
 @NgModule({
   declarations: [

@@ -5,7 +5,15 @@ contract Superheroes {
   Superhero[] public superheroes;
   mapping (uint => uint) superheroesVotes;
   mapping (address => uint[]) userVotes;
+  mapping (uint => Review[]) superheroesReviews;
+
   uint superheroCount;
+
+  struct Review {
+    address author;
+    uint mark;
+    string text;
+  }
 
   struct Superhero {
     uint id;
@@ -15,10 +23,11 @@ contract Superheroes {
     string description;
   }
 
-  function vote(uint superHeroID) public {
+  function review(uint superHeroID, uint mark, string memory reviewText) public {
     require(msg.sender != address(0), "You must be a real user");
-    superheroesVotes[superHeroID]++;
-    userVotes[msg.sender].push(superHeroID);
+    require(getHero(superHeroID).id!=0, "Hero must exists");
+
+    superheroesReviews[superHeroID].push(Review(msg.sender, mark, reviewText));
   }
 
   function addSuperhero(string memory name, string memory avatar, string memory category, string memory description) public returns (uint heroID, string memory heroName, string memory heroAvatar, string memory heroCategory, string memory heroDescription) {
@@ -44,5 +53,10 @@ contract Superheroes {
       }
     }
   }
+
+  function getSuperheroReviews(uint superheroID) public view returns(Review[] memory reviews) {
+    return superheroesReviews[superheroID];
+  }
+
 
 }

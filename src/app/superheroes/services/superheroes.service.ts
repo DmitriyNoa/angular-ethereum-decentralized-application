@@ -12,6 +12,10 @@ export class SuperheroesService {
   private ABI: any;
 
   constructor(private web3Service: Web3Service) {
+    this.web3Service.artifactsToContract(superheroesABI)
+      .then((instance) => {
+        this.ABI = instance;
+      });
     this.web3Service.accountsObservable.subscribe((accounts) => {
       this.accounts = accounts;
     });
@@ -31,6 +35,10 @@ export class SuperheroesService {
 
   getHero(id: number): Promise<any> {
     return this.ABI.getHero.call(id);
+  }
+
+  reviewSuperHero(superheroID: number, reviewMark: number, reviewText: string) {
+    return this.ABI.review(superheroID, reviewMark, reviewText, {from: this.accounts[0]});
   }
 
 }

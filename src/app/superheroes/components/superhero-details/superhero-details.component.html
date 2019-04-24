@@ -10,6 +10,12 @@
       </div>
       <div class="clearfix"></div>
     </div>
-    <button mat-button routerLink="['/']">back to the list</button>
+    <button  mat-button routerLink="/">Back to list</button>
+  </mat-card-content>
+  <mat-card-content>
+    <app-hero-review-form [hero]="hero"></app-hero-review-form>
+  </mat-card-content>
+  <mat-card-content>
+    <app-reviews reviews="reviews"></app-reviews>
   </mat-card-content>
 </mat-card>

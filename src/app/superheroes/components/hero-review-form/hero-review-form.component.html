@@ -1,3 +1,16 @@
-<p>
-  hero-review-form works!
-</p>
+<div>
+  <h4>Add a review</h4>
+    <div class="container">
+      <mat-form-field id="score"  class="full-width">
+        <mat-select name="score"  [(value)]="review.mark" placeholder="Score">
+          <mat-option *ngFor="let mark of marks" [value]="mark">{{mark}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field  class="full-width">
+        <textarea matInput id="description" placeholder="Review text" [(ngModel)]="review.text"></textarea>
+      </mat-form-field>
+      <button mat-button (click)="addSuperheroReview()">Submit</button>
+    </div>
+</div>
+
+

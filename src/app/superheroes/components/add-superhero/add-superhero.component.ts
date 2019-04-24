@@ -14,7 +14,7 @@ export class AddSuperheroComponent implements OnInit {
 
   }
 
-  categories = ['Marvel', 'DC', 'JavaScript']
+  categories = ['Marvel', 'DC', 'JavaScript'];
 
   constructor(private superheroService: SuperheroesService, private router: Router, private snackBar: MatSnackBar) { }
 

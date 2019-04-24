@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
+import {Superhero} from '../../interfaces/Hero';
 
 @Component({
   selector: 'app-superhero-details',
@@ -8,10 +9,12 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class SuperheroDetailsComponent implements OnInit {
 
-  public hero = {};
+  public hero: Superhero;
+  public superheroReviews: any[];
 
   constructor(private route: ActivatedRoute) {
     this.hero = this.route.snapshot.data.hero;
+    this.superheroReviews = this.route.snapshot.data.reviews;
   }
 
   ngOnInit() {
