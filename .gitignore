@@ -1,0 +1,15 @@
+node_modules
+/.awcache
+/.vscode
+/.idea
+/dist
+/dist-ts
+/docz-dist
+/.docz
+/coverage
+/credentials
+.DS_Store
+*.log
+*.pid
+db.sqlite
+CHANGELOG.md

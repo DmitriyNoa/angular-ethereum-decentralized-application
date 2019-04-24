@@ -1,0 +1,7 @@
+.full-width {
+  width: 100%;
+}
+.container {
+  max-width: 980px;
+  margin: auto;
+}

@@ -1,0 +1,15 @@
+<mat-card>
+  <mat-card-content>
+    <div class="hero-details">
+      <div class="hero-avatar">
+        <img [src]="hero.avatar" alt={{hero.name}}} title={{hero.name}} width="400" />
+      </div>
+      <div class="hero-content">
+        <h1>{{hero.name}}</h1>
+        <p>{{hero.description}}</p>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <button mat-button routerLink="['/']">back to the list</button>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,18 @@
+<div class="content">
+  <mat-grid-list cols="4">
+    <mat-grid-tile *ngFor="let hero of superheroes">
+      <mat-card >
+        <mat-card-content>
+          <div>
+            <a href="" [routerLink]="['/superheroes/', hero.id]">
+              <img [src]="hero.avatar" alt={{hero.name}} title={{hero.name}} class="avatar" />
+            </a>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+  <div class="content">
+    <button  mat-button routerLink="add-superhero">Add a hero</button>
+  </div>
+</div>

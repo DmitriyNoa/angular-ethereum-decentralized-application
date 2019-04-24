@@ -1,0 +1,23 @@
+<mat-card>
+  <mat-card-content>
+    <h1>Add a superhero</h1>
+    <div class="container">
+      <mat-form-field class="full-width">
+        <input type="text" matInput id="name" placeholder="Superhero name" [(ngModel)]="hero.name" />
+      </mat-form-field>
+      <mat-form-field id="category"  class="full-width">
+        <mat-select name="category"  [(value)]="hero.category" placeholder="Hero universe">
+          <mat-option *ngFor="let category of categories" [value]="category">{{category}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field  class="full-width">
+        <input type="text" matInput id="avatar" placeholder="Superhero avatar url" [(ngModel)]="hero.avatar" />
+      </mat-form-field>
+      <mat-form-field  class="full-width">
+        <textarea matInput id="description" placeholder="Superhero description" [(ngModel)]="hero.description"></textarea>
+      </mat-form-field>
+      <button mat-button (click)="addHero(hero)">Add hero</button>
+    </div>
+  </mat-card-content>
+</mat-card>
+
