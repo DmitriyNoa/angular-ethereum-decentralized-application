@@ -10,6 +10,7 @@ export class Web3ResolverService implements Resolve<any> {
 
   constructor() {
   }
+
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any>  {
     if (!web3) {
       const delay = new Promise(resolve => setTimeout(resolve, 100));

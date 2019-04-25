@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import superheroesContract from '../../build/contracts/Superheroes.json';
 
 import { RouterModule, Routes } from '@angular/router';
 const appRoutes: Routes = [
@@ -13,8 +14,13 @@ const appRoutes: Routes = [
     path: 'superheroes/:id',
     component: SuperheroDetailsComponent,
     resolve: {
+      web3: Web3ResolverService,
       hero: HeroDetailResolverService,
-      reviews: ReviewsResolverService
+      reviews: ReviewsResolverService,
+      abi: ContractAbiResolverService
+    },
+    data: {
+      contractABI: superheroesContract
     }
   },
   {
@@ -32,7 +38,11 @@ const appRoutes: Routes = [
     path: 'superheroes',
     resolve: {
       web3: Web3ResolverService,
-      superheroes: SuperheroesResolverService
+      superheroes: SuperheroesResolverService,
+      abi: ContractAbiResolverService
+    },
+    data: {
+      contractABI: superheroesContract
     },
     component: SuperheroesListComponent
   }
@@ -56,6 +66,9 @@ import {HeroDetailResolverService} from './superheroes/services/hero-detail-reso
 import {Web3ResolverService} from './common/services/web3-resolver.service';
 import {SuperheroesResolverService} from './superheroes/services/superheroes-resolver.service';
 import {ReviewsResolverService} from './superheroes/services/reviews-resolver.service';
+import {Web3Service} from './common/services/web3.service';
+import {ContractAbiResolverService} from './common/services/contract-abi-resolver.service';
+import {SuperheroesService} from './superheroes/services/superheroes.service';
 
 @NgModule({
   declarations: [
@@ -84,7 +97,10 @@ import {ReviewsResolverService} from './superheroes/services/reviews-resolver.se
     MatListModule,
     UtilModule
   ],
-  providers: [],
+  providers: [
+    Web3Service,
+    SuperheroesService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

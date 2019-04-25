@@ -2,11 +2,14 @@ import {Injectable} from '@angular/core';
 import contract from 'truffle-contract';
 import {Subject} from 'rxjs';
 declare let require: any;
+declare let ethereum: any;
 const Web3 = require('web3');
 
 declare let window: any;
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class Web3Service {
   private web3: any;
   private accounts: string[];
@@ -20,8 +23,21 @@ export class Web3Service {
     });
   }
 
+  private async enableAccounts() {
+    if (window.ethereum) {
+      window.web3 = new Web3(ethereum);
+      try {
+        // Request account access if needed
+        await ethereum.enable();
+      } catch (error) {
+        // User denied account access...
+      }
+    }
+  }
+
   public bootstrapWeb3() {
     // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+
     if (typeof window.web3 !== 'undefined') {
       // Use Mist/MetaMask's provider
       this.web3 = new Web3(window.web3.currentProvider);
@@ -34,7 +50,13 @@ export class Web3Service {
       this.web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
     }
 
-    this.refreshAccounts();
+    setInterval(this.refreshAccounts, 500);
+
+    // check if privacy mode is activated and request access
+
+    this.enableAccounts().then(() => {
+      this.refreshAccounts();
+    });
   }
 
   public async artifactsToContract(artifacts) {
@@ -53,7 +75,11 @@ export class Web3Service {
     return window.web3.currentProvider;
   }
 
-  public refreshAccounts() {
+  public getAccount() {
+    return this.accounts[0];
+  }
+
+  public refreshAccounts = () => {
     this.web3.eth.getAccounts((err, accs) => {
       console.log('Refreshing accounts');
       if (err != null) {

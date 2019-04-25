@@ -1,6 +1,9 @@
 <div class="content">
+  <mat-toolbar class="hero-filters">
+    <button mat-button (click)="setUniverse('')">All</button> |  <button mat-button (click)="setUniverse('Marvel')">Marvel</button> | <button mat-button (click)="setUniverse('DC')">DC</button> | <button mat-button (click)="setUniverse('JavaScript')">JavaScript</button>
+  </mat-toolbar>
   <mat-grid-list cols="4">
-    <mat-grid-tile *ngFor="let hero of superheroes">
+    <mat-grid-tile *ngFor="let hero of (superheroes | universe: currentUniverse)" [@openClose]="hero.isOpen ? 'open' : 'closed'">
       <mat-card >
         <mat-card-content>
           <div>

@@ -7,7 +7,7 @@ import {
   MatFormFieldModule,
   MatGridListModule,
   MatInputModule,
-  MatSelectModule, MatSnackBarModule
+  MatSelectModule, MatSnackBarModule, MatToolbarModule
 } from '@angular/material';
 import { AddSuperheroComponent } from './components/add-superhero/add-superhero.component';
 import {FormsModule} from '@angular/forms';
@@ -15,9 +15,12 @@ import {RouterModule} from '@angular/router';
 import { SuperheroDetailsComponent } from './components/superhero-details/superhero-details.component';
 import { HeroReviewFormComponent } from './components/hero-review-form/hero-review-form.component';
 import { ReviewsComponent } from './components/reviews/reviews.component';
+import {SuperheroesService} from './services/superheroes.service';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {HeroesListPipe} from './services/heroes-list-pipe.pipe';
 
 @NgModule({
-  declarations: [SuperheroesListComponent,  AddSuperheroComponent, SuperheroDetailsComponent, HeroReviewFormComponent, ReviewsComponent],
+  declarations: [HeroesListPipe, SuperheroesListComponent,  AddSuperheroComponent, SuperheroDetailsComponent, HeroReviewFormComponent, ReviewsComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -28,7 +31,10 @@ import { ReviewsComponent } from './components/reviews/reviews.component';
     MatButtonModule,
     MatFormFieldModule,
     MatGridListModule,
-    RouterModule
-  ]
+    RouterModule,
+    BrowserAnimationsModule,
+    MatToolbarModule
+  ],
+  providers: [SuperheroesService]
 })
 export class SuperheroesModule { }

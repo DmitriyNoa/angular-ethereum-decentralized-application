@@ -23,17 +23,22 @@ contract Superheroes {
     string description;
   }
 
+  event NewReview(address author, uint mark, string text);
+  event NewSuperhero(uint id, string  name, string avatar, string category, string description);
+
   function review(uint superHeroID, uint mark, string memory reviewText) public {
     require(msg.sender != address(0), "You must be a real user");
     require(getHero(superHeroID).id!=0, "Hero must exists");
 
     superheroesReviews[superHeroID].push(Review(msg.sender, mark, reviewText));
+    emit NewReview(msg.sender, mark, reviewText);
   }
 
   function addSuperhero(string memory name, string memory avatar, string memory category, string memory description) public returns (uint heroID, string memory heroName, string memory heroAvatar, string memory heroCategory, string memory heroDescription) {
     superheroCount++;
     Superhero memory newHero = Superhero(superheroCount, name, avatar, category, description);
     superheroes.push(newHero);
+    emit NewSuperhero(superheroCount, newHero.name, newHero.avatar, newHero.category, newHero.description);
     return (newHero.id, newHero.name, newHero.avatar, newHero.category, newHero.description);
   }
 

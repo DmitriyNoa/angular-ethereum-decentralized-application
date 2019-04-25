@@ -2,12 +2,13 @@ import {Component, Input, OnInit} from '@angular/core';
 import {SuperheroesService} from '../../services/superheroes.service';
 import {Superhero} from '../../interfaces/Hero';
 import {MatSnackBar} from '@angular/material';
-import {Router} from '@angular/router';
+import {Web3Service} from '../../../common/services/web3.service';
 
-interface Review {
-  author?: string;
+export interface Review {
   mark?: number;
   text?: string;
+  author?: string;
+  isOpen?: boolean;
 }
 
 @Component({
@@ -24,7 +25,8 @@ export class HeroReviewFormComponent implements OnInit {
 
   public review: Review = {};
 
-  constructor(private superheroService: SuperheroesService, private snackBar: MatSnackBar, private router: Router) { }
+  constructor(private superheroService: SuperheroesService, private snackBar: MatSnackBar, private web3Service: Web3Service) {
+  }
 
   addSuperheroReview() {
     this.superheroService.reviewSuperHero(this.hero.id, this.review.mark, this.review.text).then(() => {

@@ -8,21 +8,28 @@ const superheroesABI = require('../../../../build/contracts/Superheroes.json');
   providedIn: 'root'
 })
 export class SuperheroesService {
-  private accounts: string[];
   private ABI: any;
 
   constructor(private web3Service: Web3Service) {
     this.web3Service.artifactsToContract(superheroesABI)
       .then((instance) => {
+        console.log('ORIGINAL ABI', instance);
         this.ABI = instance;
       });
-    this.web3Service.accountsObservable.subscribe((accounts) => {
-      this.accounts = accounts;
-    });
+  }
+
+  public setContractABI(ABI: any) {
+    this.ABI = ABI;
   }
 
   public addHero({name, avatar, category, description}): Promise<any> {
-    return this.ABI.addSuperhero(name, avatar, category, description, {from: this.accounts[0]});
+    return this.ABI.addSuperhero(name, avatar, category, description, {from: this.web3Service.getAccount()});
+  }
+
+  public subscribeToEvent(eventName: string, callback: (data: any) => any) {
+    return this.ABI[eventName]()
+      .on('data', callback)
+      .on('error', console.error);
   }
 
   getHeroes(): Promise<any> {
@@ -34,7 +41,7 @@ export class SuperheroesService {
   }
 
   reviewSuperHero(superheroID: number, reviewMark: number, reviewText: string) {
-    return this.ABI.review(superheroID, reviewMark, reviewText, {from: this.accounts[0]});
+    return this.ABI.review(superheroID, reviewMark, reviewText, {from: this.web3Service.getAccount()});
   }
 
 }

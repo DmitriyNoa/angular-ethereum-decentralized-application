@@ -1,3 +1,7 @@
-<p>
-  reviews works!
-</p>
+<mat-card *ngFor="let review of reviews" [@openClose]="review.isOpen ? 'open' : 'closed'" class="review-item">
+  <mat-card-content>
+  <div>Author: {{review.author}}</div>
+  <div>Mark: {{review.mark}}</div>
+  <div>{{review.text}}</div>
+  </mat-card-content>
+</mat-card>
