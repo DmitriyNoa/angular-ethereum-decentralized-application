@@ -1,8 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Web3Service} from '../../common/services/web3.service';
-
-declare let require: any;
-const superheroesABI = require('../../../../build/contracts/Superheroes.json');
+import superheroesABI from '../../../../build/contracts/Superheroes.json';
 
 @Injectable({
   providedIn: 'root'
