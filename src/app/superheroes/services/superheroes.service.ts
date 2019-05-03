@@ -11,7 +11,6 @@ export class SuperheroesService {
   constructor(private web3Service: Web3Service) {
     this.web3Service.artifactsToContract(superheroesABI)
       .then((instance) => {
-        console.log('ORIGINAL ABI', instance);
         this.ABI = instance;
       });
   }

@@ -45,6 +45,7 @@ export class SuperheroesListComponent implements OnInit {
 
   ngOnInit() {
     this.superheroesService.subscribeToEvent('NewSuperhero', (data) => {
+      console.log('A new hero ahs been added', data);
       const superHero = {
         id: data.args.id,
         name: data.args.name,
@@ -58,6 +59,9 @@ export class SuperheroesListComponent implements OnInit {
       }, 1000);
       this.superheroes.unshift(superHero);
     });
+
+
+
   }
 
 }

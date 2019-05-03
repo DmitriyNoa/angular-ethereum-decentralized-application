@@ -40,14 +40,14 @@ export class Web3Service {
 
     if (typeof window.web3 !== 'undefined') {
       // Use Mist/MetaMask's provider
-      this.web3 = new Web3(window.web3.currentProvider);
+      this.web3 = new Web3(new Web3(window.web3.currentProvider)); //new Web3(window.web3.currentProvider);
     } else {
       console.log('No web3? You should consider trying MetaMask!');
 
       // Hack to provide backwards compatibility for Truffle, which uses web3js 0.20.x
       Web3.providers.HttpProvider.prototype.sendAsync = Web3.providers.HttpProvider.prototype.send;
       // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
-      this.web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
+      this.web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
     }
 
     setInterval(this.refreshAccounts, 500);

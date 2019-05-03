@@ -2,7 +2,6 @@ node_modules
 /.awcache
 /.vscode
 /.idea
-build
 /dist
 /dist-ts
 /docz-dist
