@@ -37,12 +37,10 @@ const appRoutes: Routes = [
   {
     path: 'superheroes',
     resolve: {
-      web3: Web3ResolverService,
-      superheroes: SuperheroesResolverService,
-      abi: ContractAbiResolverService
+      RPCData: PureRpcResolverService // RPC resolver makes pure RPC request and does not require MetaMask or any other blockchain plugin
     },
     data: {
-      contractABI: superheroesContract
+      abiMethodName: 'getSuperHeroes'
     },
     component: SuperheroesListComponent
   }
@@ -69,6 +67,7 @@ import {ReviewsResolverService} from './superheroes/services/reviews-resolver.se
 import {Web3Service} from './common/services/web3.service';
 import {ContractAbiResolverService} from './common/services/contract-abi-resolver.service';
 import {SuperheroesService} from './superheroes/services/superheroes.service';
+import {PureRpcResolverService} from './common/services/pure-rpc-resolver.service';
 
 @NgModule({
   declarations: [

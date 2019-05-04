@@ -16,7 +16,7 @@ export class Web3ResolverService implements Resolve<any> {
       const delay = new Promise(resolve => setTimeout(resolve, 100));
       return delay;
     } else {
-      return Promise.resolve();
+      return Promise.resolve(web3);
     }
   }
 }

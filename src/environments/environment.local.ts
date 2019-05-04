@@ -1,7 +1,7 @@
 declare const require;
 const ABI = require('../../build/contracts/Superheroes.json');
 export const environment = {
-  production: true,
-  RPCProvider: 'https://ropsten.infura.io/v3/084897e338f14cbea8e0d249105b405f',
+  local: true,
+  RPCProvider: 'http://localhost:7545',
   ABI
 };

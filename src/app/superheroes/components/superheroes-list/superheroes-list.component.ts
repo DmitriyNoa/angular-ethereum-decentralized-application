@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {SuperheroesService} from '../../services/superheroes.service';
 import {ActivatedRoute} from '@angular/router';
 import {Superhero} from '../../interfaces/Hero';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-
+import Web3 from 'web3';
+import { ethers } from 'ethers';
+import abiDecoder from 'abi-decoder';
 
 @Component({
   selector: 'app-superheroes-list',
@@ -35,8 +37,8 @@ export class SuperheroesListComponent implements OnInit {
   public currentUniverse = '';
 
   constructor(private superheroesService: SuperheroesService, private route: ActivatedRoute) {
-    this.superheroes = this.route.snapshot.data.superheroes;
-    this.superheroesService.setContractABI(this.route.snapshot.data.abi);
+    this.superheroes = this.route.snapshot.data.RPCData;
+    // this.superheroesService.setContractABI(this.route.snapshot.data.abi);
   }
 
   setUniverse(universe: string) {
@@ -44,8 +46,8 @@ export class SuperheroesListComponent implements OnInit {
   }
 
   ngOnInit() {
+    /*
     this.superheroesService.subscribeToEvent('NewSuperhero', (data) => {
-      console.log('A new hero ahs been added', data);
       const superHero = {
         id: data.args.id,
         name: data.args.name,
@@ -59,8 +61,7 @@ export class SuperheroesListComponent implements OnInit {
       }, 1000);
       this.superheroes.unshift(superHero);
     });
-
-
+  */
 
   }
 
