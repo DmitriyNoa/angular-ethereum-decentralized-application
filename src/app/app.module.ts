@@ -11,19 +11,6 @@ import superheroesContract from '../../build/contracts/Superheroes.json';
 import { RouterModule, Routes } from '@angular/router';
 const appRoutes: Routes = [
   {
-    path: 'superheroes/:id',
-    component: SuperheroDetailsComponent,
-    resolve: {
-      web3: Web3ResolverService,
-      hero: HeroDetailResolverService,
-      reviews: ReviewsResolverService,
-      abi: ContractAbiResolverService
-    },
-    data: {
-      contractABI: superheroesContract
-    }
-  },
-  {
     path: 'add-superhero',
     component: AddSuperheroComponent,
     data: { title: 'Heroes List' }
@@ -43,6 +30,30 @@ const appRoutes: Routes = [
       abiMethodName: 'getSuperHeroes'
     },
     component: SuperheroesListComponent
+  },
+  {
+    path: 'superheroes/:id',
+    component: SuperheroDetailsComponent,
+    resolve: {
+      // hero: HeroDetailResolverService, Standard web3 injected resolver. Requires MetaMask
+      reviews: ReviewsRpcResolverService,
+      abi: ContractAbiResolverService,
+      RPCData: PureRpcResolverService // RPC resolver makes pure RPC request and does not require MetaMask or any other blockchain plugin
+    },
+    data: {
+      contractABI: superheroesContract,
+      abiMethodName: 'getHero',
+      abiMethodParameter: 'id',
+      abiMethods: [{
+        name: 'getHero',
+        parameter: 'id'
+      },
+      {
+        name: 'getSuperheroReviews',
+        parameter: 'id'
+      }
+      ]
+    }
   }
 ];
 
@@ -60,14 +71,11 @@ import {SuperheroDetailsComponent} from './superheroes/components/superhero-deta
 import { NavComponent } from './common/components/nav/nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import {UtilModule} from './common/services/util.module';
-import {HeroDetailResolverService} from './superheroes/services/hero-detail-resolver.service';
-import {Web3ResolverService} from './common/services/web3-resolver.service';
-import {SuperheroesResolverService} from './superheroes/services/superheroes-resolver.service';
-import {ReviewsResolverService} from './superheroes/services/reviews-resolver.service';
 import {Web3Service} from './common/services/web3.service';
 import {ContractAbiResolverService} from './common/services/contract-abi-resolver.service';
 import {SuperheroesService} from './superheroes/services/superheroes.service';
 import {PureRpcResolverService} from './common/services/pure-rpc-resolver.service';
+import {ReviewsRpcResolverService} from './common/services/reviews-rpc-resolver.service';
 
 @NgModule({
   declarations: [

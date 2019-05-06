@@ -3,9 +3,6 @@ import {SuperheroesService} from '../../services/superheroes.service';
 import {ActivatedRoute} from '@angular/router';
 import {Superhero} from '../../interfaces/Hero';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import Web3 from 'web3';
-import { ethers } from 'ethers';
-import abiDecoder from 'abi-decoder';
 
 @Component({
   selector: 'app-superheroes-list',
@@ -61,8 +58,6 @@ export class SuperheroesListComponent implements OnInit {
       }, 1000);
       this.superheroes.unshift(superHero);
     });
-  */
-
+    */
   }
-
 }

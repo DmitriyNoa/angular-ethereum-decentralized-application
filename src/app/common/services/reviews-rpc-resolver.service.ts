@@ -6,12 +6,12 @@ import {RPCService} from './rpc.service';
 @Injectable({
   providedIn: 'root'
 })
-export class PureRpcResolverService implements Resolve<any> {
+export class ReviewsRpcResolverService implements Resolve<any> {
 
   constructor(private rpcService: RPCService) {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
-    return this.rpcService.rpc(route.data['abiMethodName'], route.params[route.data['abiMethodParameter']]);
+    return this.rpcService.rpc('getSuperheroReviews', route.params[route.data['abiMethodParameter']]);
   }
 }

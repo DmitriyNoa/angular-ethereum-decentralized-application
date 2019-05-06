@@ -25,7 +25,7 @@ export class HeroReviewFormComponent implements OnInit {
 
   public review: Review = {};
 
-  constructor(private superheroService: SuperheroesService, private snackBar: MatSnackBar, private web3Service: Web3Service) {
+  constructor(private superheroService: SuperheroesService, private snackBar: MatSnackBar) {
   }
 
   addSuperheroReview() {

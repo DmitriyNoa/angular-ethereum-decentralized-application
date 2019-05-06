@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --configuration=localRemoteProvider",
     "build": "ng build",
     "test": "ng test --watch=false",
     "lint": "ng lint",

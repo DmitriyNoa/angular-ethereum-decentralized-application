@@ -13,9 +13,14 @@ export class SuperheroDetailsComponent implements OnInit {
   public hero: Superhero;
   public superheroReviews: Review[];
 
+  // [1, 'Superman', 'https://someavatar.com/avatar', 'DC', 'Has many superpowers']
   constructor(private route: ActivatedRoute, private superheroService: SuperheroesService) {
-    this.hero = this.route.snapshot.data.hero;
+    const [id, name, avatar, category, description] = this.route.snapshot.data.RPCData;
+    this.hero = {
+      id, name, avatar, category, description
+    };
     this.superheroReviews = this.route.snapshot.data.reviews;
+    console.log(this.superheroReviews );
     this.superheroService.setContractABI(this.route.snapshot.data.abi);
   }
 
