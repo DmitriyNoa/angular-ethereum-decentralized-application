@@ -24,7 +24,7 @@ const appRoutes: Routes = [
   {
     path: 'superheroes',
     resolve: {
-      RPCData: PureRpcResolverService // RPC resolver makes pure RPC request and does not require MetaMask or any other blockchain plugin
+      RPCData: PureRpcResolverService, // RPC resolver makes pure RPC request and does not require MetaMask or any other blockchain plugin
     },
     data: {
       abiMethodName: 'getSuperHeroes'
@@ -36,8 +36,7 @@ const appRoutes: Routes = [
     component: SuperheroDetailsComponent,
     resolve: {
       // hero: HeroDetailResolverService, Standard web3 injected resolver. Requires MetaMask
-      reviews: ReviewsRpcResolverService,
-      abi: ContractAbiResolverService,
+      reviews: ReviewsResolverService,
       RPCData: PureRpcResolverService // RPC resolver makes pure RPC request and does not require MetaMask or any other blockchain plugin
     },
     data: {
@@ -72,10 +71,11 @@ import { NavComponent } from './common/components/nav/nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import {UtilModule} from './common/services/util.module';
 import {Web3Service} from './common/services/web3.service';
-import {ContractAbiResolverService} from './common/services/contract-abi-resolver.service';
 import {SuperheroesService} from './superheroes/services/superheroes.service';
 import {PureRpcResolverService} from './common/services/pure-rpc-resolver.service';
 import {ReviewsRpcResolverService} from './common/services/reviews-rpc-resolver.service';
+import {ReviewsResolverService} from './superheroes/services/reviews-resolver.service';
+
 
 @NgModule({
   declarations: [

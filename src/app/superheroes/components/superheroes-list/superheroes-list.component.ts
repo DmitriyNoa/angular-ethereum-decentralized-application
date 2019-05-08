@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {SuperheroesService} from '../../services/superheroes.service';
 import {ActivatedRoute} from '@angular/router';
 import {Superhero} from '../../interfaces/Hero';
@@ -28,29 +28,21 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
     ]),
   ],
 })
-export class SuperheroesListComponent implements OnInit {
+export class SuperheroesListComponent {
 
   public superheroes: Superhero[] = [];
   public currentUniverse = '';
 
   constructor(private superheroesService: SuperheroesService, private route: ActivatedRoute) {
     this.superheroes = this.route.snapshot.data.RPCData;
-    // this.superheroesService.setContractABI(this.route.snapshot.data.abi);
-  }
-
-  setUniverse(universe: string) {
-    this.currentUniverse = universe;
-  }
-
-  ngOnInit() {
-    /*
-    this.superheroesService.subscribeToEvent('NewSuperhero', (data) => {
+    this.superheroesService.subscribeToEvent('NewSuperhero', (event) => {
+      const [id, name, avatar, category, description] = event.returnValues;
       const superHero = {
-        id: data.args.id,
-        name: data.args.name,
-        category: data.args.category,
-        avatar: data.args.avatar,
-        description: data.args.description,
+        id,
+        name,
+        category,
+        avatar,
+        description,
         isOpen: true
       };
       setTimeout(() => {
@@ -58,6 +50,9 @@ export class SuperheroesListComponent implements OnInit {
       }, 1000);
       this.superheroes.unshift(superHero);
     });
-    */
+  }
+
+  setUniverse(universe: string) {
+    this.currentUniverse = universe;
   }
 }

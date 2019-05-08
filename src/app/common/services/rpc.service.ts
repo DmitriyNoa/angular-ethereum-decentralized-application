@@ -31,8 +31,8 @@ export class RPCService {
       })
     }).then((e) => e.json()).then((data) => {
       const result = data.result;
-      const test = web3.eth.abi.decodeParameters(functionABI.outputs, result);
-      return Promise.resolve(test.result || test[0]);
+      const decoded = web3.eth.abi.decodeParameters(functionABI.outputs, result);
+      return Promise.resolve(decoded.result || decoded[0]);
     });
   }
 }
