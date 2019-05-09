@@ -16,7 +16,7 @@ export interface Review {
   templateUrl: './hero-review-form.component.html',
   styleUrls: ['./hero-review-form.component.css']
 })
-export class HeroReviewFormComponent implements OnInit {
+export class HeroReviewFormComponent{
 
   public marks: number[] = [1, 2, 3, 4, 5];
 
@@ -30,13 +30,10 @@ export class HeroReviewFormComponent implements OnInit {
 
   addSuperheroReview() {
     this.superheroService.reviewSuperHero(this.hero.id, this.review.mark, this.review.text).then(() => {
-      this.snackBar.open('Review added', '', {
+      this.snackBar.open('You review has been sent', '', {
         duration: 2000,
       });
     });
-  }
-
-  ngOnInit() {
   }
 
 }

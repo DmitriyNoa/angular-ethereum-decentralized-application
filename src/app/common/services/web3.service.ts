@@ -71,42 +71,42 @@ export class Web3Service {
     }
   }
 
-public getProvider() {
-return this.web3.currentProvider;
-}
+  public getProvider() {
+    return this.web3.currentProvider;
+  }
 
-public getAccount() {
-if (!this.accounts) {
-  console.log('Couldn\'t get any accounts! Make sure your Ethereum client is configured correctly.');
-  return null;
-}
-return this.accounts[0];
-}
-
-public refreshAccounts = () => {
-if (typeof window.web3 !== 'undefined') {
-  this.web3.eth.getAccounts((err, accs) => {
-    console.log('Refreshing accounts');
-    if (err != null) {
-      console.warn('There was an error fetching your accounts.');
-      return;
+  public getAccount() {
+    if (!this.accounts) {
+      console.log('Couldn\'t get any accounts! Make sure your Ethereum client is configured correctly.');
+      return null;
     }
+    return this.accounts[0];
+  }
 
-    // Get the initial account balance so it can be displayed.
-    if (accs.length === 0) {
-      console.warn('Couldn\'t get any accounts! Make sure your Ethereum client is configured correctly.');
-      return;
+  public refreshAccounts = () => {
+    if (typeof window.web3 !== 'undefined') {
+      this.web3.eth.getAccounts((err, accs) => {
+        console.log('Refreshing accounts');
+        if (err != null) {
+          console.warn('There was an error fetching your accounts.');
+          return;
+        }
+
+        // Get the initial account balance so it can be displayed.
+        if (accs.length === 0) {
+          console.warn('Couldn\'t get any accounts! Make sure your Ethereum client is configured correctly.');
+          return;
+        }
+
+        if (!this.accounts || this.accounts.length !== accs.length || this.accounts[0] !== accs[0]) {
+          console.log('Observed new accounts');
+
+          this.accountsObservable.next(accs);
+          this.accounts = accs;
+        }
+
+        this.ready = true;
+      });
     }
-
-    if (!this.accounts || this.accounts.length !== accs.length || this.accounts[0] !== accs[0]) {
-      console.log('Observed new accounts');
-
-      this.accountsObservable.next(accs);
-      this.accounts = accs;
-    }
-
-    this.ready = true;
-  });
-}
-};
+  };
 }
