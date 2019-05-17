@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import Web3 from 'web3';
 import { environment } from '../../../environments/environment';
 import {Observable} from 'rxjs';
+import {HexEncodeDecodeService} from './hex-encode-decode.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RPCService {
 
-  constructor() { }
+  constructor(private encoder: HexEncodeDecodeService) { }
 
   rpc(methodName: string, parameterValue: string): Observable<any> | Promise<any> | any {
     const ABI = environment.ABI;
@@ -22,6 +23,9 @@ export class RPCService {
         contractAddress = ABI.networks[key].address;
       }
     }
+    console.log('encoder1', web3.eth.abi.encodeParameter('uint256', 11));
+    console.log('encoder2', this.encoder.decimalToEthereumHexadecimal(11));
+
     const RPCData = functionABI.inputs.length ?  web3.eth.abi.encodeFunctionCall(functionABI, [parameterValue]) : functionABI.signature;
 
     return fetch(environment.RPCProvider, {

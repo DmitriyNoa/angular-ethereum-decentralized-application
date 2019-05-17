@@ -6,10 +6,6 @@ import { Injectable } from '@angular/core';
 export class HexEncodeDecodeService {
   // TO DO: Write pure js implementation for decodding the results;
   constructor() {
-    this.hexToAscii("");
-
-
-    this.hexadecimalNumberToDecimal(16);
   }
 
   hexToAscii(hexString) {
@@ -19,10 +15,28 @@ export class HexEncodeDecodeService {
       str += String.fromCharCode(parseInt(hex.substr(n, 2), 16));
     }
     return str;
-
-    // 10
   }
 
+  prepandToEthereumNumber(hexNumber) {
+    const hexStringNumber = hexNumber.toString();
+    const zeroArraylength = 64 - hexStringNumber.length;
+    const zeroArray = new Array(zeroArraylength).fill(0);
+    return `0x${zeroArray.join('')}${hexNumber}`;
+  }
+
+  decimalToEthereumHexadecimal(decimalNumber) {
+    const hexadecimaNumberString = (decimalNumber << 0).toString(16);
+    return this.prepandToEthereumNumber(hexadecimaNumberString);
+  }
+
+  asciiToHexadecimal(str) {
+    const arr1 = [];
+    for (let n = 0, l = str.length; n < l; n ++) {
+      const hex = Number(str.charCodeAt(n)).toString(16);
+      arr1.push(hex);
+    }
+    return arr1.join('');
+  }
 
   hexadecimalNumberToDecimal(hexNumber) {
     const hexString = hexNumber.toString(16);
