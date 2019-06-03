@@ -10,7 +10,8 @@ export class SuperheroesService {
   }
 
   public addHero({name, avatar, category, description}): Promise<any> {
-    return this.web3Service.abi.addSuperhero(name, avatar, category, description, {from: this.web3Service.getAccount()});
+    console.log(this.web3Service.abi);
+    return this.web3Service.abi.methods.addSuperhero(name, avatar, category, description).send({from: this.web3Service.getAccount()});
   }
 
   public subscribeToEvent(eventName: string, callback: (data: any) => any) {

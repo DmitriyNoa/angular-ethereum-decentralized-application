@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import contract from 'truffle-contract';
 import {Subject} from 'rxjs';
 import {environment} from '../../../environments/environment';
 

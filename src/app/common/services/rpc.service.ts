@@ -23,8 +23,6 @@ export class RPCService {
         contractAddress = ABI.networks[key].address;
       }
     }
-    console.log('encoder1', web3.eth.abi.encodeParameter('uint256', 11));
-    console.log('encoder2', this.encoder.decimalToEthereumHexadecimal(11));
 
     const RPCData = functionABI.inputs.length ?  web3.eth.abi.encodeFunctionCall(functionABI, [parameterValue]) : functionABI.signature;
 
