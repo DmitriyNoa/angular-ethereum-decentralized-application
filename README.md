@@ -2,6 +2,8 @@
 This is an example of DApp (decentralized application). The blockchain part is an Ethereum, Solidity Smart contract, here it is basically the backend (a service). Frontend application is an Angular-cli project.
 It allows you to review superheroes (add marks, write some feedback), add new superheroes. All data is stored on a blockchain: superheroes, reviews.
 
+![App preview](docs/images/Demo.gif?raw=true "App preview")
+
 ## Disclaimer
 This is a learning project. It's not recommended for a production. I will improve it to make production ready soon. If you would like to help me bringing it ready to production, just let know on dmytro.zharkov@gmail.com.
 
@@ -35,7 +37,7 @@ This is a learning project. It's not recommended for a production. I will improv
 2. In a terminal run ```cd angular-ethereum-decentralized-application```.
 3. ```make install_all```.
 4. Open new a terminal tab and run the local Ethereum with: ```make run_local_ethereum```.
-5. Now when local Ganache instance is running we need to deploy the contract to it. In a new terminal tab run: ```deploy_to_local_ethereum```.
+5. Now when local Ganache instance is running we need to deploy the contract to it. In a new terminal tab run: ```make deploy_to_local_ethereum```.
 6. If the deployment has been successful start the angular app with ```npm run start_local```.
 7. The project is now available under http://localhost:4200.
 
