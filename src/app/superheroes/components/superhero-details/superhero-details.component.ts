@@ -30,7 +30,7 @@ export class SuperheroDetailsComponent {
     }, 1000);
 
     this.websoket.listen((data) => {
-      const [author, mark, text] = data;
+      const {author, mark, text} = data;
       const review = {
         author,
         mark,
