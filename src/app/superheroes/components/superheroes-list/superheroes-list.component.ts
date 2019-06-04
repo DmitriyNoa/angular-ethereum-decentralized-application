@@ -45,7 +45,7 @@ export class SuperheroesListComponent {
     const instance = new web3.eth.Contract(environment.ABI.abi, environment.ABI.networks[environment.networkID].address);
     instance.events.NewSuperhero()
       .on('data', (event) => {
-        const [id, name, avatar, category, description] = event.returnValues;
+        const {id, name, avatar, category, description} = event.returnValues;
         const superHero = {
           id,
           name,

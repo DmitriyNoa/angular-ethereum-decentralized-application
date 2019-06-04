@@ -65,7 +65,6 @@ export class Web3Service {
 
   public artifactsToContract() {
     if (this.web3) {
-      console.log(environment.ABI);
       const instance = new this.web3.eth.Contract(environment.ABI.abi, environment.ABI.networks[environment.networkID].address);
       return instance;
     }
@@ -86,7 +85,6 @@ export class Web3Service {
   public refreshAccounts = () => {
     if (typeof window.web3 !== 'undefined') {
       this.web3.eth.getAccounts((err, accs) => {
-        console.log('Refreshing accounts');
         if (err != null) {
           console.warn('There was an error fetching your accounts.');
           return;
