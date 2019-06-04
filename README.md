@@ -41,9 +41,13 @@ This is a learning project. It's not recommended for a production. I will improv
 6. If the deployment has been successful start the angular app with ```npm run start_local```.
 7. The project is now available under http://localhost:4200.
 
-### Prepare you browser. 
+### Prepare you browser.
+####This step is required if you want to add reviews (perform write operations), or add a superhero when running on local environment.
 1. Install MetaMask plugin for your browser. FireFox, Chrome and Opera are supported. Follow instruction on https://metamask.io/ or get it from your browser store.
-2. To to Ganache -> Accounts click on a key icon and copy appeared private key.
-3. Go to your browser. Click on the MetaMask extension icon. On the top of the plugin window, change the network to http://localhost:7545.
+2. If running against local Ehtereum: 
+2.1. go to terminal tab where you ran "make run_local_ethereum".
+2.2. At the beginning of terminal output you should see available accounts list.
+2.3. Copy the first one under "Private Keys".
+3. Go to your browser. Click on the MetaMask extension icon. On the top of the plugin window, change the network to http://localhost:8545.
 4. In the plugin window click on the circle in tight top corner -> import account and copy paste the private key, click add. If everything went well you will see your nw account, it should have just a little bit less then 100 test ETH (99.96 ETH). The small amount of ETH was charged for the contract deployment in previous steps.
-
+![Accounts import](docs/images/MMSetup.gif?raw=true "Accounts import")
