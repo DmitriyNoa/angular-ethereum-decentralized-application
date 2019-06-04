@@ -35,7 +35,7 @@ const appRoutes: Routes = [
     component: SuperheroDetailsComponent,
     resolve: {
       // hero: HeroDetailResolverService, Standard web3 injected resolver. Requires MetaMask
-      reviews: ReviewsResolverService,
+      reviews: ReviewsRpcResolverService,
       RPCData: PureRpcResolverService // RPC resolver makes pure RPC request and does not require MetaMask or any other blockchain plugin
     },
     data: {
@@ -43,10 +43,6 @@ const appRoutes: Routes = [
       abiMethodParameter: 'id',
       abiMethods: [{
         name: 'getHero',
-        parameter: 'id'
-      },
-      {
-        name: 'getSuperheroReviews',
         parameter: 'id'
       }
       ]
