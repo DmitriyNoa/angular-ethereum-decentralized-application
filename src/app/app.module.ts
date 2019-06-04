@@ -6,7 +6,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import superheroesContract from '../../build/contracts/Superheroes.json';
 
 import { RouterModule, Routes } from '@angular/router';
 const appRoutes: Routes = [
@@ -40,7 +39,6 @@ const appRoutes: Routes = [
       RPCData: PureRpcResolverService // RPC resolver makes pure RPC request and does not require MetaMask or any other blockchain plugin
     },
     data: {
-      contractABI: superheroesContract,
       abiMethodName: 'getHero',
       abiMethodParameter: 'id',
       abiMethods: [{
