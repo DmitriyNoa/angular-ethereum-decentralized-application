@@ -2,14 +2,13 @@ import { Injectable } from '@angular/core';
 import Web3 from 'web3';
 import { environment } from '../../../environments/environment';
 import {Observable} from 'rxjs';
-import {HexEncodeDecodeService} from './hex-encode-decode.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RPCService {
 
-  constructor(private encoder: HexEncodeDecodeService) { }
+  constructor() { }
 
   rpc(methodName: string, parameterValue: string): Observable<any> | Promise<any> | any {
     const ABI = environment.ABI;
