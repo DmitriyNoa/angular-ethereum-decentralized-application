@@ -6,7 +6,7 @@
     "ng": "ng",
     "start": "ng serve --configuration=localRemoteProvider",
     "start_local": "ng serve --configuration=local",
-    "build": "ng build",
+    "build": "ng build --aot --prod --buildOptimizer=true",
     "test": "ng test --watch=false",
     "lint": "ng lint",
     "e2e": "ng e2e",
