@@ -1,4 +1,4 @@
-# Angular 7 Ethereum full stack example application.
+# Angular 8 Ethereum full stack example application.
 This is an example of DApp (decentralized application). The blockchain part is an Ethereum, Solidity Smart contract, here it is basically the backend (a service). Frontend application is an Angular-cli project.
 It allows you to review superheroes (add marks, write some feedback), add new superheroes. All data is stored on a blockchain: superheroes, reviews.
 
@@ -22,17 +22,22 @@ This is a learning project. It's not recommended for a production. I will improv
 * MetaMask plugin for your browser or a blockchain based browser like Mist.
 
 ## Installation.
-1. Install Ganache-cli. Follow the instructions on https://github.com/trufflesuite/ganache-cli.
-2. Install Ganache. Follow the instructions on https://truffleframework.com/ganache.
-3. Install Truffle framework. Follow instructions on https://github.com/trufflesuite/truffle.
-4. Launch the Ganache by running the application according to your OS.
-5. Clone this project.
-6. CD into the project.
-7. In your terminal run ```truffle compile && truffle migrate```. This will deploy smart contract to your local Ethereum blockchain. If you deployment is successful you get a message and you will see a new folder in the project called build. If something fails - first check that port in ./truffle.js file matches the port in Ganache setting.
-8 Now run ```npm install``` to install all dependencies.
-9. Now you can run the project with ```npm start```.
-10. The project is now available under http://localhost:4200.
-11. Follow the 'Prepare you browser' step below.
+### Simple installation. Run against Ropsten deployment (adding new heroes is restricted to account owner).
+
+1. ```git clone https://github.com/DmitriyNoa/angular-ethereum-decentralized-application.git```.
+2. ```cd angular-ethereum-decentralized-application```.
+3. ```npm i```.
+4. ```npm start```.
+
+### Full local setup. Run against local Ethereum instance. 
+
+1. ```git clone https://github.com/DmitriyNoa/angular-ethereum-decentralized-application.git```.
+2. In a terminal run ```cd angular-ethereum-decentralized-application```.
+3. ```make install_all```.
+4. Open new a terminal tab and run the local Ethereum with: ```make run_local_ethereum```.
+5. Now when local Ganache instance is running we need to deploy the contract to it. In a new terminal tab run: ```deploy_to_local_ethereum```.
+6. If the deployment has been successful start the angular app with ```npm run start_local```.
+7. The project is now available under http://localhost:4200.
 
 ### Prepare you browser. 
 1. Install MetaMask plugin for your browser. FireFox, Chrome and Opera are supported. Follow instruction on https://metamask.io/ or get it from your browser store.

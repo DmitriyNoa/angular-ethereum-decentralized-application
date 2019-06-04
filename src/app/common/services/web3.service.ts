@@ -65,7 +65,8 @@ export class Web3Service {
 
   public artifactsToContract() {
     if (this.web3) {
-      const instance = new this.web3.eth.Contract(environment.ABI.abi, environment.ABI.networks[3].address);
+      console.log(environment.ABI);
+      const instance = new this.web3.eth.Contract(environment.ABI.abi, environment.ABI.networks[environment.networkID].address);
       return instance;
     }
   }

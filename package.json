@@ -5,6 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --configuration=localRemoteProvider",
+    "start_local": "ng serve --configuration=local",
     "build": "ng build",
     "test": "ng test --watch=false",
     "lint": "ng lint",
