@@ -25,9 +25,9 @@ export class SuperheroDetailsComponent {
     };
     this.superheroReviews = this.route.snapshot.data.reviews;
 
-    setTimeout(() => {
+    this.websoket.socketOpened.subscribe(() => {
       this.websoket.subscribe('NewReview');
-    }, 1000);
+    });
 
     this.websoket.listen((data) => {
       const {author, mark, text} = data;

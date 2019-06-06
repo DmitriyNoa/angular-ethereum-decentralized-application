@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import {environment} from '../../../environments/environment';
 import Web3 from 'web3';
 
@@ -9,13 +9,14 @@ export class WebSocketsService {
   private socket;
   private ABI = environment.ABI;
   private events = [];
+  public socketOpened: EventEmitter<boolean> = new EventEmitter();
 
   constructor() {
 
     this.socket = new WebSocket(environment.RPCWSSProvider);
 
     this.socket.addEventListener('open', (event) => {
-      console.log('Socket connection opened');
+      this.socketOpened.next(true);
     });
   }
 
