@@ -103,23 +103,35 @@ export class HexEncodeDecodeService {
   public decodeArrayItem(item, output) {
     const copy = [...item];
     const hero = [];
+    // go through the types and decode data in hex array depending on a type
     for (let i = 0; i < output.length; i++) {
       const outputItem = output[i];
-
+      // check the data type, if it a simple or dynamic (e.g. string or uint)
       if (this.getDataType(outputItem.type) === 'simple') {
+        // if simple, e.g. uint - just decode
         hero[outputItem.name] = this.hexadecimalNumberToDecimal(copy.splice(0, 1)[0]);
+        // to support old format (not possible to return structure) also assign to ussual array index
         hero[i] = hero[outputItem.name];
       } else {
+        // get first data byte location in hex bytes
         const heroData = copy.splice(0, 1)[0];
 
+        // get dynamic type location in hex bytes
         const dataLocationlength = this.hexadecimalNumberToDecimal(this.removeTrailingZeros(heroData)) / 32;
+
+        // get dynamic type size in hex bytes
         const dynamicTypeSizeInBytes = this.hexadecimalNumberToDecimal(this.removeTrailingZeros(item[dataLocationlength]));
+
+        // get dynamic type location like an array index (we are adding one as the element before is size data)
         const dataLocation = this.hexadecimalNumberToDecimal(this.removeTrailingZeros(heroData)) / 32 + 1;
 
+        // data might be more then 32 bytes and goes split into several 32 bytes chunks. In this case we need to concatenate all the chunk into one.
+        // just encode if size is smaller or equals to 32
         if (dynamicTypeSizeInBytes <= 32) {
           hero[outputItem.name] = this.hex2ascii(this.removeTrailingZeros(item[dataLocation]));
           hero[i] = hero[outputItem.name];
         } else {
+          // concatenate if longer then 32. We nned to find shunks number, so we devide by 32 and ceil to the nearest bigger int.
           const numberOfChunks = Math.ceil(dynamicTypeSizeInBytes / 32);
           hero[outputItem.name] = '';
           hero[i] = '';
@@ -154,28 +166,35 @@ export class HexEncodeDecodeService {
 
 
   public decode(hexData, abi) {
-    console.log(hexData);
     const result = [];
+    // remove 0x from the hexadecimal string
     const cleanHexData = this.removeInitialHexPrefix(hexData);
+    // split the data by 32 bytes chunks, thus 64 characters strings
     const chunksArray = this.splitBy32bytes(cleanHexData);
-    console.log('chunksArray', chunksArray);
+
+    // check datais an array
     if (abi[0].type.includes('[]')) {
+      // get array length location in bytes, hexadecimal
       const arrayLengthLocationHex = chunksArray.splice(0, 1)[0];
+      // get array length in bytes, hexadecimal
       const arrayLengthnHex = chunksArray.splice(0, 1)[0];
+      // get array location in decimal bytes
       const arrayLengthLocation = this.hexadecimalNumberToDecimal(arrayLengthLocationHex);
+      // get array length in decimal bytes
       const arrayLength = this.hexadecimalNumberToDecimal(arrayLengthnHex);
 
-      console.log(arrayLength);
+      // get array elements indexes in hex bytes
       const arrayItemsHexLocations = chunksArray.splice(0, arrayLength);
-      console.log('arrayItemsHexLocations', arrayItemsHexLocations);
-      // get array items locations and convert them into indexes
+
+      // get array elements indexes in decimal bytes
       const arrayItemsLocation = arrayItemsHexLocations.map((hexItem) => {
         return this.hexadecimalNumberToDecimal(this.removeTrailingZeros(hexItem)) / 32 - arrayLength;
       });
-      console.log('arrayItemsLocation', arrayItemsLocation);
+
+      // prepare the array to hold hexadecimal array elements
       const hexHeroes = [];
 
-      // splice the array onto heroes, according to the location data
+      // splice array by indexes got before to get array items in hex
       arrayItemsLocation.forEach((item, index) => {
         let hexHero;
         if (index + 1 !== arrayItemsLocation.length) {
@@ -188,26 +207,21 @@ export class HexEncodeDecodeService {
         hexHeroes.push(hexHero);
       });
 
-      console.log('hexHeroes', hexHeroes);
-
+      // go throught the hex array items and decode into decimal/ASCII
       hexHeroes.forEach((item) => {
+        // pass to deco function the item => array of hex values and ABI types array
         result.push(this.decodeArrayItem(item, abi[0].components));
       });
-      /*
-      = this.removeTrailingZeros(chunksArray.splice(0, 1));
-      const arrayLengthLocation = this.hexadecimalNumberToDecimal(arrayLenthLocationHex) / 32;
-      const arrayLength = this.hexadecimalNumberToDecimal(this.removeTrailingZeros(chunksArray.splice(0, 1)));
 
-       */
       return result;
     } else {
+      // if this is an tuple type aka object, remove first byte location in hex
       const firstByteLocationHex = chunksArray.splice(0, 1)[0];
-       result.push(this.decodeArrayItem(chunksArray, abi[0].components));
+
+      // decode the tuple and push to the result array
+      result.push(this.decodeArrayItem(chunksArray, abi[0].components));
       return result[0];
     }
   }
 
 }
-
-//exports.AddressZero = '0x0000000000000000000000000000000000000000';
-//exports.HashZero = '0x0000000000000000000000000000000000000000000000000000000000000000';

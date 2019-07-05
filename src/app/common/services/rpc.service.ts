@@ -33,10 +33,7 @@ export class RPCService {
       })
     }).then((e) => e.json()).then((data) => {
       const result = data.result;
-      console.log('Custom decodeing');
       const decodedResult = this.decodingService.decode(result, functionABI.outputs);
-      console.log(decodedResult);
-      const decoded = web3.eth.abi.decodeParameters(functionABI.outputs, result);
       return Promise.resolve(decodedResult);
     });
   }
