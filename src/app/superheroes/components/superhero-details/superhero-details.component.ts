@@ -7,6 +7,7 @@ import {MatSnackBar} from '@angular/material';
 import {environment} from '../../../../environments/environment';
 import Web3 from 'web3';
 import {WebSocketsService} from '../../../common/services/web-sockets.service';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-superhero-details',
@@ -18,7 +19,7 @@ export class SuperheroDetailsComponent {
   public hero: Superhero;
   public superheroReviews: Review[];
 
-  constructor(private route: ActivatedRoute, private superheroService: SuperheroesService, private snackBar: MatSnackBar, private websoket: WebSocketsService) {
+  constructor(private route: ActivatedRoute, private superheroService: SuperheroesService, private snackBar: MatSnackBar, private websoket: WebSocketsService, public sanitizer: DomSanitizer) {
     const [id, name, avatar, category, description] = this.route.snapshot.data.RPCData;
     this.hero = {
       id, name, avatar, category, description
@@ -46,6 +47,14 @@ export class SuperheroDetailsComponent {
         duration: 2000,
       });
     });
+  }
+
+  photoURL(url) {
+    return this.sanitizer.bypassSecurityTrustUrl(url);
+  }
+
+  description(html) {
+    return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 
 }

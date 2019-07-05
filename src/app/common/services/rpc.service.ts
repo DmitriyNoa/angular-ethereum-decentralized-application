@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import Web3 from 'web3';
 import { environment } from '../../../environments/environment';
 import {Observable} from 'rxjs';
+import {HexEncodeDecodeService} from './hex-encode-decode.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RPCService {
 
-  constructor() { }
+  constructor(private decodingService: HexEncodeDecodeService) { }
 
   rpc(methodName: string, parameterValue: string): Observable<any> | Promise<any> | any {
     const ABI = environment.ABI;
@@ -32,8 +33,11 @@ export class RPCService {
       })
     }).then((e) => e.json()).then((data) => {
       const result = data.result;
+      console.log('Custom decodeing');
+      const decodedResult = this.decodingService.decode(result, functionABI.outputs);
+      console.log(decodedResult);
       const decoded = web3.eth.abi.decodeParameters(functionABI.outputs, result);
-      return Promise.resolve(decoded.result || decoded[0]);
+      return Promise.resolve(decodedResult);
     });
   }
 }

@@ -7,6 +7,7 @@ import {MatSnackBar} from '@angular/material';
 import {environment} from '../../../../environments/environment';
 import Web3 from 'web3';
 import {WebSocketsService} from '../../../common/services/web-sockets.service';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-superheroes-list',
@@ -37,8 +38,10 @@ export class SuperheroesListComponent {
   public superheroes: Superhero[] = [];
   public currentUniverse = '';
 
-  constructor(private superheroesService: SuperheroesService, private route: ActivatedRoute, private snackBar: MatSnackBar, private websoket: WebSocketsService) {
+  constructor(private superheroesService: SuperheroesService, private route: ActivatedRoute, private snackBar: MatSnackBar, private websoket: WebSocketsService, public sanitizer: DomSanitizer) {
     this.superheroes = this.route.snapshot.data.RPCData;
+
+
 
     this.websoket.socketOpened.subscribe(() => {
       this.websoket.subscribe('NewSuperhero');
@@ -49,8 +52,8 @@ export class SuperheroesListComponent {
       const superHero = {
         id,
         name,
-        category,
         avatar,
+        category,
         description,
         isOpen: true
       };
@@ -60,6 +63,10 @@ export class SuperheroesListComponent {
       }, 1000);
       this.superheroes.unshift(superHero);
     });
+  }
+
+  photoURL(url) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
   setUniverse(universe: string) {
