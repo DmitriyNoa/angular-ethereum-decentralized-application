@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { RouterModule, Routes } from '@angular/router';
+import { TronwebService } from './common/services/tronweb.service';
 const appRoutes: Routes = [
   {
     path: 'add-superhero',
@@ -100,6 +101,7 @@ import {ReviewsResolverService} from './superheroes/services/reviews-resolver.se
   ],
   providers: [
     Web3Service,
+    TronwebService,
     SuperheroesService
   ],
   bootstrap: [AppComponent]
