@@ -7,7 +7,8 @@ import {MatSnackBar} from '@angular/material';
 import {environment} from '../../../../environments/environment';
 import Web3 from 'web3';
 import {WebSocketsService} from '../../../common/services/web-sockets.service';
-import {DomSanitizer} from '@angular/platform-browser';
+import {TronwebService} from '../../../common/services/tronweb.service';
+declare let window;
 
 @Component({
   selector: 'app-superheroes-list',
@@ -38,13 +39,21 @@ export class SuperheroesListComponent {
   public superheroes: Superhero[] = [];
   public currentUniverse = '';
 
-  constructor(private superheroesService: SuperheroesService, private route: ActivatedRoute, private snackBar: MatSnackBar, private websoket: WebSocketsService, public sanitizer: DomSanitizer) {
+
+  constructor(private superheroesService: SuperheroesService, private route: ActivatedRoute, private snackBar: MatSnackBar, private websoket: WebSocketsService, public tronweb: TronwebService) {
     this.superheroes = this.route.snapshot.data.RPCData;
-
-
 
     this.websoket.socketOpened.subscribe(() => {
       this.websoket.subscribe('NewSuperhero');
+    });
+
+    const hex = "4187d45be1d6fd9525446c20caf1174c2c9023faf7";
+
+    this.tronweb.setContract(window.tronWeb, hex).then((data) => {
+      console.log(this.tronweb.contract);
+      this.tronweb.contract.getHero(1).call().then((hero) => {
+        console.log(hero);
+      })
     });
 
     this.websoket.listen((data) => {
@@ -52,8 +61,8 @@ export class SuperheroesListComponent {
       const superHero = {
         id,
         name,
-        avatar,
         category,
+        avatar,
         description,
         isOpen: true
       };
@@ -63,10 +72,6 @@ export class SuperheroesListComponent {
       }, 1000);
       this.superheroes.unshift(superHero);
     });
-  }
-
-  photoURL(url) {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
   setUniverse(universe: string) {
