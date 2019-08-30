@@ -11,6 +11,9 @@ import {TronwebService} from '../../../common/services/tronweb.service';
 import {DomSanitizer} from '@angular/platform-browser';
 import {TronRpcService} from '../../../common/services/tron-rpc.service';
 import {HexEncodeDecodeService} from '../../../common/services/hex-encode-decode.service';
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import {changeProvider} from '../../../common/redux/counter.actions';
 declare let window;
 
 @Component({
@@ -41,9 +44,10 @@ export class SuperheroesListComponent {
 
   public superheroes: Superhero[] = [];
   public currentUniverse = '';
+  public currentProvider: string;
 
 
-  constructor(private superheroesService: SuperheroesService, private route: ActivatedRoute, private snackBar: MatSnackBar, private websoket: WebSocketsService, public tronweb: TronwebService, public sanitizer: DomSanitizer, public tronRPC: TronRpcService, private decodingService: HexEncodeDecodeService) {
+  constructor(private superheroesService: SuperheroesService, private route: ActivatedRoute, private snackBar: MatSnackBar, private websoket: WebSocketsService, public tronweb: TronwebService, public sanitizer: DomSanitizer, public tronRPC: TronRpcService, private decodingService: HexEncodeDecodeService, private store: Store<{ provider: string }>) {
     this.superheroes = this.route.snapshot.data.RPCData.map((item: any) => {
       const [id, name, avatar, category, description] = item;
       return {
@@ -54,6 +58,10 @@ export class SuperheroesListComponent {
         description
       };
     });
+
+    this.store.select('provider').subscribe(
+      this.handleProviderChange
+    );
 
     this.websoket.socketOpened.subscribe(() => {
       this.websoket.subscribe('NewSuperhero');
@@ -123,6 +131,59 @@ export class SuperheroesListComponent {
 
   photoURL(url) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
+
+  handleProviderChange = (val) => {
+     this.currentProvider = val.provider;
+     this.getSuperHeroes();
+  }
+
+  getSuperHeroes() {
+    switch (this.currentProvider) {
+      case 'tron': {
+        this.tronRPC.rpc('getSuperHeroes()', null).then((data) => {
+          const testABI = [
+            {
+              components: [
+                {
+                  name: "id",
+                  type: "uint256"
+                },
+                {
+                  name: "name",
+                  type: "string"
+                },
+                {
+                  name: "avatar",
+                  type: "string"
+                },
+                {
+                  name: "category",
+                  type: "string"
+                },
+                {
+                  name: "description",
+                  type: "string"
+                }
+              ],
+              name: "result",
+              type: "tuple[]"
+            }
+          ]
+          const d = this.decodingService.decode(data, testABI);
+          this.superheroes = d;
+        })
+      }
+      break;
+      case 'ethereum': {
+
+      }
+    }
+  }
+
+  changeProvider(event) {
+    console.log(event);
+    this.store.dispatch(changeProvider({provider: event}));
   }
 
 

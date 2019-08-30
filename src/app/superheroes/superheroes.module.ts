@@ -18,9 +18,12 @@ import { ReviewsComponent } from './components/reviews/reviews.component';
 import {SuperheroesService} from './services/superheroes.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HeroesListPipe} from './services/heroes-list-pipe.pipe';
+import {BlockchainChooserComponent} from '../common/components/blockchain-chooser/blockchain-chooser.component';
+import {StoreModule} from '@ngrx/store';
+import {counterReducer} from '../common/redux/reducer';
 
 @NgModule({
-  declarations: [HeroesListPipe, SuperheroesListComponent,  AddSuperheroComponent, SuperheroDetailsComponent, HeroReviewFormComponent, ReviewsComponent],
+  declarations: [HeroesListPipe, SuperheroesListComponent,  AddSuperheroComponent, SuperheroDetailsComponent, HeroReviewFormComponent, ReviewsComponent, BlockchainChooserComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -33,7 +36,8 @@ import {HeroesListPipe} from './services/heroes-list-pipe.pipe';
     MatGridListModule,
     RouterModule,
     BrowserAnimationsModule,
-    MatToolbarModule
+    MatToolbarModule,
+    StoreModule.forRoot({ provider: counterReducer })
   ],
   providers: [SuperheroesService]
 })

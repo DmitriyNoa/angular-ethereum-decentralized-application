@@ -1,6 +1,9 @@
 <div class="content">
   <mat-toolbar class="hero-filters">
     <button mat-button (click)="setUniverse('')">All</button> |  <button mat-button (click)="setUniverse('Marvel')">Marvel</button> | <button mat-button (click)="setUniverse('DC')">DC</button> | <button mat-button (click)="setUniverse('JavaScript')">JavaScript</button>
+    <div class="float-right"> <div>
+      <app-blockchain-chooser [currentProvider]="currentProvider" (onBlockhainProviderChange)="changeProvider($event)"></app-blockchain-chooser>
+    </div></div>
   </mat-toolbar>
   <mat-grid-list cols="4" [gutterSize]="'20px'" rowHeight="1:1.5" >
     <mat-grid-tile *ngFor="let hero of (superheroes | universe: currentUniverse)" [@openClose]="hero.isOpen ? 'open' : 'closed'" class="hero-item">
@@ -8,9 +11,10 @@
         <mat-card-content>
           <div>
             <a href="" [routerLink]="['/superheroes/', hero.id]">
-              <img [src]="photoURL(hero.avatar)" alt={{hero.name}} title={{hero.name}} class="avatar" />
+              <img [src]="hero.avatar" alt={{hero.name}} title={{hero.name}} class="avatar" />
             </a>
           </div>
+
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>

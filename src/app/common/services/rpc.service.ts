@@ -11,7 +11,8 @@ export class RPCService {
 
   constructor(private decodingService: HexEncodeDecodeService) { }
 
-  rpc(methodName: string, parameterValue: string): Observable<any> | Promise<any> | any {
+  rpc(methodName: string, parameterValue: string, configuration?): Observable<any> | Promise<any> | any {
+    console.log('-----configuration-----', configuration);
     const ABI = environment.ABI;
     const web3 = new Web3();
     const functionABI = ABI.abi.filter((abiItem) => {

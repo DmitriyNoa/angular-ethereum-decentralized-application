@@ -25,6 +25,8 @@
     "@angular/platform-browser-dynamic": "8.0.0",
     "@angular/platform-server": "8.0.0",
     "@angular/router": "8.0.0",
+    "@ngrx/core": "^1.2.0",
+    "@ngrx/store": "^8.3.0",
     "abi-decoder": "^1.2.0",
     "core-js": "^2.5.7",
     "ethers": "^4.0.27",

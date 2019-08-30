@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { StoreModule } from '@ngrx/store';
 import { RouterModule, Routes } from '@angular/router';
 import { TronwebService } from './common/services/tronweb.service';
 const appRoutes: Routes = [
@@ -56,7 +57,7 @@ import {
   MatCardModule,
   MatFormFieldModule,
   MatInputModule,
-  MatToolbarModule, MatSidenavModule, MatIconModule, MatListModule
+  MatToolbarModule, MatSidenavModule, MatIconModule, MatListModule, MatSelectModule
 } from '@angular/material';
 import {SuperheroesListComponent} from './superheroes/components/superheroes-list/superheroes-list.component';
 import {SuperheroesModule} from './superheroes/superheroes.module';
@@ -70,6 +71,8 @@ import {SuperheroesService} from './superheroes/services/superheroes.service';
 import {PureRpcResolverService} from './common/services/pure-rpc-resolver.service';
 import {ReviewsRpcResolverService} from './common/services/reviews-rpc-resolver.service';
 import {ReviewsResolverService} from './superheroes/services/reviews-resolver.service';
+import { BlockchainChooserComponent } from './common/components/blockchain-chooser/blockchain-chooser.component';
+import {counterReducer} from './common/redux/reducer';
 
 
 @NgModule({
@@ -95,9 +98,11 @@ import {ReviewsResolverService} from './superheroes/services/reviews-resolver.se
     SuperheroesModule,
     LayoutModule,
     MatSidenavModule,
+    MatSelectModule,
     MatIconModule,
     MatListModule,
-    UtilModule
+    UtilModule,
+    StoreModule.forRoot({ provider: counterReducer })
   ],
   providers: [
     Web3Service,
