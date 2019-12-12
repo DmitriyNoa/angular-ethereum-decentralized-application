@@ -1,0 +1,10 @@
+<div class="control-group">
+  <mat-form-field>
+    <mat-label>Choose blockchain provider</mat-label>
+    <mat-select [(value)]="currentProvider" (selectionChange)="handleBlockchainChange($event)">
+      <mat-option *ngFor="let provider of blockchainProviders" [value]="provider">
+        {{provider}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

@@ -7,6 +7,8 @@ export const environment = {
   RPCProvider: 'http://localhost:8545',
   RPCWSSProvider: 'ws://localhost:8545',
   TronRPCProvider: 'https://api.shasta.trongrid.io/wallet/triggersmartcontract',
-  TronContractAddress: '4187d45be1d6fd9525446c20caf1174c2c9023faf7',
+  TronContractAddress: '41257390a4a494c48574cfd07dcf0f06f1ac948708',
+  EOSAddress: 'http://jungle2.cryptolions.io:80',
+  EOSContractName: 'superheroes',
   ABI
 };

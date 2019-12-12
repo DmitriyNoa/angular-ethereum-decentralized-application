@@ -17,9 +17,7 @@ export class TronRpcService {
         contract_address: environment.TronContractAddress,
         owner_address: environment.TronContractAddress,
         function_selector: 'getSuperHeroes()',
-        parameter: parameterValue || '',
-        call_value: 0,
-        fee_limit: 1000000000
+        parameter: parameterValue || ''
       })
     }).then((result) => {
       return result.json();

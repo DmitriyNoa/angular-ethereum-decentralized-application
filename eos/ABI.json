@@ -1,0 +1,160 @@
+{
+  "structs": [
+    {
+      "name": "Hero",
+      "base": "",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uint64"
+        },
+        {
+          "name": "superhero_name",
+          "type": "string"
+        },
+        {
+          "name": "category",
+          "type": "string"
+        },
+        {
+          "name": "avatar",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "Review",
+      "base": "",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uint64"
+        },
+        {
+          "name": "superhero_id",
+          "type": "uint64"
+        },
+        {
+          "name": "mark",
+          "type": "uint64"
+        },
+        {
+          "name": "review_text",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "addhero",
+      "base": "",
+      "fields": [
+        {
+          "name": "superhero_name",
+          "type": "string"
+        },
+        {
+          "name": "category",
+          "type": "string"
+        },
+        {
+          "name": "avatar",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "clear",
+      "base": "",
+      "fields": []
+    },
+    {
+      "name": "removehero",
+      "base": "",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uint64"
+        }
+      ]
+    },
+    {
+      "name": "removereview",
+      "base": "",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uint64"
+        }
+      ]
+    },
+    {
+      "name": "review",
+      "base": "",
+      "fields": [
+        {
+          "name": "superhero_id",
+          "type": "uint64"
+        },
+        {
+          "name": "mark",
+          "type": "uint64"
+        },
+        {
+          "name": "review_text",
+          "type": "string"
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "name": "addhero",
+      "type": "addhero",
+      "ricardian_contract": ""
+    },
+    {
+      "name": "clear",
+      "type": "clear",
+      "ricardian_contract": ""
+    },
+    {
+      "name": "removehero",
+      "type": "removehero",
+      "ricardian_contract": ""
+    },
+    {
+      "name": "removereview",
+      "type": "removereview",
+      "ricardian_contract": ""
+    },
+    {
+      "name": "review",
+      "type": "review",
+      "ricardian_contract": ""
+    }
+  ],
+  "tables": [
+    {
+      "name": "heroes",
+      "type": "Hero",
+      "index_type": "i64",
+      "key_names": [],
+      "key_types": []
+    },
+    {
+      "name": "reviews",
+      "type": "Review",
+      "index_type": "i64",
+      "key_names": [],
+      "key_types": []
+    }
+  ]
+}

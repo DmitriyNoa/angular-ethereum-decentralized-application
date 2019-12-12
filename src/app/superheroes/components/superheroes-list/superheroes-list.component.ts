@@ -11,9 +11,14 @@ import {TronwebService} from '../../../common/services/tronweb.service';
 import {DomSanitizer} from '@angular/platform-browser';
 import {TronRpcService} from '../../../common/services/tron-rpc.service';
 import {HexEncodeDecodeService} from '../../../common/services/hex-encode-decode.service';
-import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import {Store, select} from '@ngrx/store';
+import TronWeb from 'tronweb';
+import {Observable} from 'rxjs';
 import {changeProvider} from '../../../common/redux/counter.actions';
+
+import {Api, JsonRpc} from 'eosjs';
+import {JsSignatureProvider} from 'eosjs/dist/eosjs-jssig';
+
 declare let window;
 
 @Component({
@@ -48,6 +53,74 @@ export class SuperheroesListComponent {
 
 
   constructor(private superheroesService: SuperheroesService, private route: ActivatedRoute, private snackBar: MatSnackBar, private websoket: WebSocketsService, public tronweb: TronwebService, public sanitizer: DomSanitizer, public tronRPC: TronRpcService, private decodingService: HexEncodeDecodeService, private store: Store<{ provider: string }>) {
+
+    /*
+    // FETCH EOS HEROES
+    const requestdata = {
+      'json': true,
+      'code': 'superheroes1',
+      'scope': 'superheroes1',
+      'table': 'heroes'
+    };
+    fetch(`${environment.EOSAddress}/v1/chain/get_table_rows`, {
+      method: 'POST',
+      body: JSON.stringify(requestdata)
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      console.log(data);
+    });
+
+     */
+
+
+    const defaultPrivateKey = '5Je4LmjwJwArRB1hUZi5f3KF3h4pKkSPynxS6LNaKgSEVf6KVP5';
+    const signatureProvider = new JsSignatureProvider([defaultPrivateKey]);
+    const rpc = new JsonRpc(environment.EOSAddress, {fetch});
+    const api = new Api({rpc, signatureProvider, textDecoder: new TextDecoder(), textEncoder: new TextEncoder()});
+
+    // to get data by secondary ker provide index position >1, lower_bound and upper bound same value
+
+    rpc.get_table_rows({
+      'json': true,
+      'code': 'superheroes1',
+      'scope': 'superheroes1',
+      'table': 'reviews',
+      'table_key': 'superhero_id',
+      'key_type': 'i64',
+      'index_position': 2,
+      'lower_bound': 1,
+      'upper_bound': 1
+    }).then((data) => {
+      console.log(data);
+    });
+
+    // by superheroid
+    /*
+    api.transact({
+      actions: [{
+        account: 'superheroes',
+        name: 'addhero',
+        authorization: [{
+          actor: 'superheroes',
+          permission: 'active',
+        }],
+        data: {
+          superhero_name: 'Iron man',
+          avatar: 'someavatar',
+          category: 'Marvel',
+          description: 'Super strong'
+        },
+      }]
+    }, {
+      blocksBehind: 3,
+      expireSeconds: 30,
+    }).then((result) => {
+      console.log(result);
+    });
+
+  */
+
     this.superheroes = this.route.snapshot.data.RPCData.map((item: any) => {
       const [id, name, avatar, category, description] = item;
       return {
@@ -72,45 +145,45 @@ export class SuperheroesListComponent {
         {
           components: [
             {
-              name: "id",
-              type: "uint256"
+              name: 'id',
+              type: 'uint256'
             },
             {
-              name: "name",
-              type: "string"
+              name: 'name',
+              type: 'string'
             },
             {
-              name: "avatar",
-              type: "string"
+              name: 'avatar',
+              type: 'string'
             },
             {
-              name: "category",
-              type: "string"
+              name: 'category',
+              type: 'string'
             },
             {
-              name: "description",
-              type: "string"
+              name: 'description',
+              type: 'string'
             }
           ],
-          name: "result",
-          type: "tuple[]"
+          name: 'result',
+          type: 'tuple[]'
         }
-      ]
+      ];
       const d = this.decodingService.decode(data, testABI);
       console.log('heroes data', d);
-    })
-/*
-    const hex = "4187d45be1d6fd9525446c20caf1174c2c9023faf7";
-
-    console.log('Getting tron web to woek11111', this.tronweb);
-
-    this.tronweb.setContract(window.tronWeb, hex).then((data) => {
-      console.log('Contract', this.tronweb.contract);
-      this.tronweb.contract.getHero(1).call().then((hero) => {
-        console.log(hero);
-      });
     });
-*/
+    /*
+        const hex = "4187d45be1d6fd9525446c20caf1174c2c9023faf7";
+
+        console.log('Getting tron web to woek11111', this.tronweb);
+
+        this.tronweb.setContract(window.tronWeb, hex).then((data) => {
+          console.log('Contract', this.tronweb.contract);
+          this.tronweb.contract.getHero(1).call().then((hero) => {
+            console.log(hero);
+          });
+        });
+    */
     this.websoket.listen((data) => {
       const {id, name, avatar, category, description} = data;
       const superHero = {
@@ -134,9 +207,15 @@ export class SuperheroesListComponent {
   }
 
   handleProviderChange = (val) => {
-     this.currentProvider = val.provider;
-     this.getSuperHeroes();
-  }
+    this.currentProvider = val.provider;
+    this.getSuperHeroes();
+  };
+
+  tronWebRequest = async () => {
+    const tronWeb = new TronWeb({fullHost: 'https://api.shasta.trongrid.io/'});
+    const contractContract = await tronWeb.contract().at('4187d45be1d6fd9525446c20caf1174c2c9023faf7');
+    console.log('tron', contractContract);
+  };
 
   getSuperHeroes() {
     switch (this.currentProvider) {
@@ -146,35 +225,35 @@ export class SuperheroesListComponent {
             {
               components: [
                 {
-                  name: "id",
-                  type: "uint256"
+                  name: 'id',
+                  type: 'uint256'
                 },
                 {
-                  name: "name",
-                  type: "string"
+                  name: 'name',
+                  type: 'string'
                 },
                 {
-                  name: "avatar",
-                  type: "string"
+                  name: 'avatar',
+                  type: 'string'
                 },
                 {
-                  name: "category",
-                  type: "string"
+                  name: 'category',
+                  type: 'string'
                 },
                 {
-                  name: "description",
-                  type: "string"
+                  name: 'description',
+                  type: 'string'
                 }
               ],
-              name: "result",
-              type: "tuple[]"
+              name: 'result',
+              type: 'tuple[]'
             }
-          ]
+          ];
           const d = this.decodingService.decode(data, testABI);
           this.superheroes = d;
-        })
+        });
       }
-      break;
+        break;
       case 'ethereum': {
 
       }

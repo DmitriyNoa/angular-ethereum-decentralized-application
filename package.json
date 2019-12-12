@@ -29,6 +29,7 @@
     "@ngrx/store": "^8.3.0",
     "abi-decoder": "^1.2.0",
     "core-js": "^2.5.7",
+    "eosjs": "^20.0.0",
     "ethers": "^4.0.27",
     "rxjs": "^6.5.2",
     "tronweb": "^2.7.1",
